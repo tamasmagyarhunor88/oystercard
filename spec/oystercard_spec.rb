@@ -13,8 +13,8 @@ describe Oystercard do
       expect(subject.balance).to eq(0)
     end
 
-    it "initializes with in_use set to false" do
-      expect(subject.in_use).to eq(false)
+    it "initializes with in_journey? set to false" do
+      expect(subject.in_journey?).to eq(false)
     end
 
     it 'initializes an entry station variable with nil value' do
@@ -42,21 +42,20 @@ describe Oystercard do
   context 'touching in and out' do
 
     before(:each) do
-      pending("these things will not be tested")
       subject.top_up(max_balance)
-      subject.touch_in
+      subject.touch_in(station)
     end
 
     context "touch_in" do
-      it "in_use changed to true when touch_in is called" do
-        expect(subject.in_use).to eq(true)
+      it "in_journey? changed to true when touch_in is called" do
+        expect(subject.in_journey?).to eq(true)
       end
     end
 
     context "touch_out" do
-      it "in_use changed to false when touch_out is called" do
+      it "in_journey? changed to false when touch_out is called" do
         subject.touch_out
-        expect(subject.in_use).to eq(false)
+        expect(subject.in_journey?).to eq(false)
       end
 
       it "deducts minimum fare from balance when touching out" do
