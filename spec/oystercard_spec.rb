@@ -11,5 +11,16 @@ describe Oystercard do
     end
 
   end
-  
+
+  context 'top_up card' do
+
+    it { is_expected.to respond_to(:top_up).with(1).argument }
+
+    it 'tops up card balance with given amount' do
+      expect { subject.top_up(10) }.to change { subject.balance }.by(10)
+    end # this syntax works as well
+    # expect{ subject.top_up 1 }.to change{ subject.balance }.by 1
+
+  end
+
 end
