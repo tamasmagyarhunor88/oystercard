@@ -40,22 +40,24 @@ describe Oystercard do
     end
   end
 
-  context "touch_in" do
-    it { is_expected.to respond_to(:touch_in) }
+  context 'touching in and out' do
 
-    it "in_use changed to true when touch_in is called" do
+    before(:each) do
+      subject.top_up(20)
       subject.touch_in
-      expect(subject.in_use).to eq(true)
     end
-  end
 
-  context "touch_out" do
-    it { is_expected.to respond_to(:touch_out) }
+    context "touch_in" do
+      it "in_use changed to true when touch_in is called" do
+        expect(subject.in_use).to eq(true)
+      end
+    end
 
-    it "in_use changed to false when touch_out is called" do
-      subject.touch_in
-      subject.touch_out
-      expect(subject.in_use).to eq(false)
+    context "touch_out" do
+      it "in_use changed to false when touch_out is called" do
+        subject.touch_out
+        expect(subject.in_use).to eq(false)
+      end
     end
   end
 end
