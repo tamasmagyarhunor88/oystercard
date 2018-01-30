@@ -37,5 +37,4 @@ describe Oystercard do
       expect { subject.deduct(10) }.to change { subject.balance }.by -10
     end
   end
-
 end

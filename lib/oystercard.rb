@@ -15,10 +15,15 @@ class Oystercard
     @balance -= amount
   end
 
+
   private
 
   def over_max?(amount)
     @balance + amount > MAXIMUM_BALANCE
+  end
+
+  def in_journey?
+    @in_use
   end
 
 end
