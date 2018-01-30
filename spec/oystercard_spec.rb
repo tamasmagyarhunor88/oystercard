@@ -29,4 +29,13 @@ describe Oystercard do
 
   end
 
+  context 'deduct' do
+
+    it { is_expected.to respond_to(:deduct).with(1).argument}
+
+    it 'deducts amount from balance' do
+      expect { subject.deduct(10) }.to change { subject.balance }.by -10
+    end
+  end
+
 end
