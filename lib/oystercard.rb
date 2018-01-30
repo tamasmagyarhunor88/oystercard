@@ -14,10 +14,6 @@ class Oystercard
     @balance += amount
   end
 
-  def deduct(amount)
-    @balance -= amount
-  end
-
   def touch_in
     fail "Insufficient funds! Your balance is #{@balance},"\
     " minimum fare is #{MINIMUM_FARE}" if minimum_fare?
@@ -25,6 +21,7 @@ class Oystercard
   end
 
   def touch_out
+    deduct(MINIMUM_FARE)
     @in_use = false
   end
 
@@ -40,6 +37,10 @@ class Oystercard
 
   def minimum_fare?
     @balance < MINIMUM_FARE
+  end
+
+  def deduct(amount)
+    @balance -= amount
   end
 
 end

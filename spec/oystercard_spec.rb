@@ -33,25 +33,10 @@ describe Oystercard do
 
   end
 
-  context 'deduct' do
-
-    it { is_expected.to respond_to(:deduct).with(1).argument}
-
-    it 'deducts amount from balance' do
-      expect { subject.deduct(10) }.to change { subject.balance }.by(-10)
-    end
-  end
-
-  context 'touch in not enough funds' do # there are no funds on card
-    it 'raises error when touch_in with no funds' do # at the moment
-      expect { subject.touch_in }.to raise_error("Insufficient funds! Your balance is #{subject.balance}, minimum fare is #{minimum_fare}")
-    end
-  end
-
   context 'touching in and out' do
 
     before(:each) do
-      subject.top_up(20)
+      subject.top_up(max_balance)
       subject.touch_in
     end
 
@@ -65,6 +50,11 @@ describe Oystercard do
       it "in_use changed to false when touch_out is called" do
         subject.touch_out
         expect(subject.in_use).to eq(false)
+      end
+
+      it "deducts minimum fare from balance when touching out" do
+        subject.touch_out
+        expect{subject.touch_out}.to change{subject.balance}.by(-minimum_fare)
       end
     end
   end
