@@ -19,7 +19,8 @@ class Oystercard
   end
 
   def touch_in
-    fail "Insufficient funds! Your balance is #{@balance}, minimum fare is #{MINIMUM_FARE}" if minimum_fare?
+    fail "Insufficient funds! Your balance is #{@balance},"\
+    " minimum fare is #{MINIMUM_FARE}" if minimum_fare?
     @in_use = true
   end
 

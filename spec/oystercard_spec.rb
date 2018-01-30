@@ -44,7 +44,7 @@ describe Oystercard do
 
   context 'touch in not enough funds' do # there are no funds on card
     it 'raises error when touch_in with no funds' do # at the moment
-      expect { subject.touch_in }.to raise_error("Insufficient funds! Your balance is #{@balance}, minimum fare is #{minimum_fare}")
+      expect { subject.touch_in }.to raise_error("Insufficient funds! Your balance is #{subject.balance}, minimum fare is #{minimum_fare}")
     end
   end
 
