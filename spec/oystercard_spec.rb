@@ -2,12 +2,14 @@ require 'oystercard'
 
 describe Oystercard do
 
-  context 'balance' do
+  context 'initialize' do
 
-    it { is_expected.to respond_to(:balance) }
+    it "initializes with a balance of 0" do
+      expect(subject.balance).to eq(0)
+    end
 
-    it 'checks if card balance is 0' do
-      expect(subject.balance).to eq 0
+    it "initializes with in_use set to false" do
+      expect(subject.in_use).to eq(false)
     end
 
   end
@@ -34,7 +36,26 @@ describe Oystercard do
     it { is_expected.to respond_to(:deduct).with(1).argument}
 
     it 'deducts amount from balance' do
-      expect { subject.deduct(10) }.to change { subject.balance }.by -10
+      expect { subject.deduct(10) }.to change { subject.balance }.by(-10)
+    end
+  end
+
+  context "touch_in" do
+    it { is_expected.to respond_to(:touch_in) }
+
+    it "in_use changed to true when touch_in is called" do
+      subject.touch_in
+      expect(subject.in_use).to eq(true)
+    end
+  end
+
+  context "touch_out" do
+    it { is_expected.to respond_to(:touch_out) }
+
+    it "in_use changed to false when touch_out is called" do
+      subject.touch_in
+      subject.touch_out
+      expect(subject.in_use).to eq(false)
     end
   end
 end
