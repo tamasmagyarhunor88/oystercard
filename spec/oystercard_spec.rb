@@ -2,6 +2,9 @@ require 'oystercard'
 
 describe Oystercard do
 
+  max_balance = Oystercard::MAXIMUM_BALANCE
+  minimum_fare = Oystercard::MINIMUM_FARE
+
   context 'initialize' do
 
     it "initializes with a balance of 0" do
@@ -24,7 +27,6 @@ describe Oystercard do
     # expect{ subject.top_up 1 }.to change{ subject.balance }.by 1
 
     it 'prevents top up if that would exceed maximum_balance' do
-      max_balance = Oystercard::MAXIMUM_BALANCE
       subject.top_up(max_balance)
       expect { subject.top_up(1) }.to raise_error("Can not have more than £#{max_balance}")
     end
@@ -37,6 +39,12 @@ describe Oystercard do
 
     it 'deducts amount from balance' do
       expect { subject.deduct(10) }.to change { subject.balance }.by(-10)
+    end
+  end
+
+  context 'touch in not enough funds' do # there are no funds on card
+    it 'raises error when touch_in with no funds' do # at the moment
+      expect { subject.touch_in }.to raise_error("Insufficient funds! Your balance is #{@balance}, minimum fare is #{minimum_fare}")
     end
   end
 
