@@ -11,7 +11,7 @@ class Journey
   end
 
   def ending(station)
-    raise "You have already touched out" if !in_journey?
+    # raise "You have already touched out" if !in_journey?
     @exit_station = station
     @entry_station = nil
   end
@@ -20,10 +20,8 @@ class Journey
     !!@entry_station
   end
 
-  def double_touch
-
-  def fare
-    Oystercard::MINIMUM_FARE
+  def fare(fare = Oystercard::MINIMUM_FARE)
+    fare
   end
 
 end

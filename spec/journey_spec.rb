@@ -23,10 +23,10 @@ describe Journey do
       expect(subject.exit_station).to eq station
     end
 
-    it 'raises error if touch out twice in a row' do
-      error_message = "You have already touched out"
-      expect { subject.ending(station) }.to raise_error error_message
-    end
+    # it 'raises error if touch out twice in a row' do
+    #   error_message = "You have already touched out"
+    #   expect { subject.ending(station) }.to raise_error error_message
+    # end
   end
 
   context '#journey?' do
@@ -44,8 +44,12 @@ describe Journey do
 
   context '#fare' do
 
-    it 'calculates the fare' do
+    it 'returns the MINIMUM FARE if user touches in and out' do
       expect(subject.fare).to eq Oystercard::MINIMUM_FARE
+    end
+
+    it 'returns the PENALTY FARE if user touches out double' do
+      expect(subject.fare(Oystercard::PENALTY_FARE)).to eq Oystercard::PENALTY_FARE
     end
   end
 end

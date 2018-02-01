@@ -57,10 +57,21 @@ describe Oystercard do
       end
 
       let(:test_journey) { {entry: entry_station, exit: exit_station} }
+      let(:double_touch_out_journey) { {entry: nil, exit: exit_station} }
 
       it 'stores entry and exit stations in journey_history' do
         subject.touch_out(exit_station)
         expect(subject.journey_history).to include test_journey
+      end
+
+      it 'deducts PENALTY_FARE when touching out twice in a row' do
+        subject.touch_out(exit_station)
+        expect { subject.touch_out(exit_station) }.to change { subject.balance }.by -described_class::PENALTY_FARE
+      end
+
+      it 'creates a journey_history with entry station at nil when touches out twice in a row' do
+        2.times { subject.touch_out(exit_station) }
+        expect(subject.journey_history).to include double_touch_out_journey
       end
     end
   end

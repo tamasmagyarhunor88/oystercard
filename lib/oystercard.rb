@@ -6,6 +6,7 @@ class Oystercard
 
   MAXIMUM_BALANCE = 90
   MINIMUM_FARE = 1
+  PENALTY_FARE = 6
 
   def initialize
     @balance = 0
@@ -27,8 +28,11 @@ class Oystercard
 
   def touch_out(exit_station)
     if !@current_journey.in_journey?
-      
-    deduct(@current_journey.fare)
+
+      deduct(@current_journey.fare(PENALTY_FARE))
+    else
+      deduct(@current_journey.fare)
+    end
     @current_journey.ending(exit_station)
     @journey_history.last[:exit] = @current_journey.exit_station
   end
