@@ -14,9 +14,6 @@ describe Oystercard do
       expect(subject.balance).to eq(0)
     end
 
-    it "initializes with in_journey? set to false" do
-      expect(subject.in_journey?).to eq(false)
-    end
 
     it 'initializes an entry station variable with nil value' do
       expect(subject.entry_station).to eq nil
