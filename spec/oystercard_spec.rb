@@ -7,7 +7,12 @@ describe Oystercard do
 
   let(:entry_station) { double :victoria }
   let(:exit_station) { double :kings_cross }
+  subject(:topped_up_card) do
+    subject.top_up(50)
+    subject
+  end
   subject(:empty_card) { described_class.new }
+
 
   context 'initialize' do
 
@@ -39,10 +44,26 @@ describe Oystercard do
   context 'touching in and out' do
 
     context "touch_in" do
+      let(:touch_in_journey) { {entry: entry_station, exit: nil} }
       it "Raises error if balance is < minimum_fare" do
         error_message = "Insufficient funds! Your balance is #{empty_card.balance},"\
         " minimum fare is #{minimum_fare}"
         expect { empty_card.touch_in(entry_station) }.to raise_error error_message
+      end
+
+      it "creates a journey history" do
+        topped_up_card.touch_in(entry_station)
+        expect(topped_up_card.journey_history).to include touch_in_journey
+      end
+    end
+
+    context "double touch in" do
+      before(:each) do
+        topped_up_card.touch_in(entry_station)
+      end
+
+      it "deducts penalty fare" do
+        expect { topped_up_card.touch_in(exit_station) }.to change{ subject.balance }.by(-described_class::PENALTY_FARE)
       end
     end
 
