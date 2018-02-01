@@ -26,11 +26,12 @@ class Oystercard
   end
 
   def touch_out(exit_station)
+    if !@current_journey.in_journey?
+      
     deduct(@current_journey.fare)
     @current_journey.ending(exit_station)
     @journey_history.last[:exit] = @current_journey.exit_station
   end
-
 
   private
 

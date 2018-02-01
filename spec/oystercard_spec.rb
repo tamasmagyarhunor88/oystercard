@@ -7,16 +7,12 @@ describe Oystercard do
 
   let(:entry_station) { double :victoria }
   let(:exit_station) { double :kings_cross }
+  subject(:empty_card) { described_class.new }
 
   context 'initialize' do
 
     it "initializes with a balance of 0" do
       expect(subject.balance).to eq(0)
-    end
-
-
-    it 'initializes an entry station variable with nil value' do
-      expect(subject.entry_station).to eq nil
     end
 
     it 'initializes en empty journey_history array' do
@@ -42,25 +38,21 @@ describe Oystercard do
 
   context 'touching in and out' do
 
-    before(:each) do
-      subject.top_up(max_balance)
-      subject.touch_in(entry_station)
-    end
-
     context "touch_in" do
-      it "in_journey? changed to true when touch_in is called" do
-        expect(subject.in_journey?).to eq(true)
+      it "Raises error if balance is < minimum_fare" do
+        error_message = "Insufficient funds! Your balance is #{empty_card.balance},"\
+        " minimum fare is #{minimum_fare}"
+        expect { empty_card.touch_in(entry_station) }.to raise_error error_message
       end
     end
 
     context "touch_out" do
-      it "in_journey? changed to false when touch_out is called" do
-        subject.touch_out(exit_station)
-        expect(subject.in_journey?).to eq(false)
+      before(:each) do
+        subject.top_up(max_balance)
+        subject.touch_in(entry_station)
       end
 
       it "deducts minimum fare from balance when touching out" do
-        subject.touch_out(exit_station)
         expect{ subject.touch_out(exit_station) }.to change{ subject.balance }.by(-minimum_fare)
       end
 
@@ -72,21 +64,4 @@ describe Oystercard do
       end
     end
   end
-
-  context 'testing touch_in(with_argument) and touch_out' do
-    before(:each) do
-      subject.top_up(max_balance)
-      subject.touch_in(entry_station)
-    end
-
-    it 'touches in and remembers entry station' do
-      expect(subject.entry_station).to eq(entry_station)
-    end
-
-    it 'touches out and sets entry_station to nil' do
-      subject.touch_out(exit_station)
-      expect(subject.entry_station).to eq(nil)
-    end
-  end
-
 end

@@ -22,22 +22,24 @@ describe Journey do
     it 'tracks exit station' do
       expect(subject.exit_station).to eq station
     end
+
+    it 'raises error if touch out twice in a row' do
+      error_message = "You have already touched out"
+      expect { subject.ending(station) }.to raise_error error_message
+    end
   end
 
   context '#journey?' do
 
-    before(:each) do
-      subject.starting(station)
-    end
-
     it 'knows when in journey' do
+      subject.starting(station)
       expect(subject).to be_in_journey
     end
 
     it "initializes with in_journey? set to false" do
       expect(subject.in_journey?).to eq(false)
     end
-    
+
   end
 
   context '#fare' do
