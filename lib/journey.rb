@@ -11,7 +11,6 @@ class Journey
   end
 
   def ending(station)
-    # raise "You have already touched out" if !in_journey?
     @exit_station = station
     @entry_station = nil
   end
