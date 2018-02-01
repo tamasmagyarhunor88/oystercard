@@ -25,7 +25,6 @@ describe Oystercard do
     it 'initializes en empty journey_history array' do
       expect(subject.journey_history).to eq []
     end
-
   end
 
   context 'top_up card' do
@@ -69,8 +68,8 @@ describe Oystercard do
       end
 
       let(:test_journey) { {entry: entry_station, exit: exit_station} }
-      
-      it 'stores entry and exit stations in journey_history' do 
+
+      it 'stores entry and exit stations in journey_history' do
         expect(subject.touch_out(exit_station)).to include test_journey
       end
     end
