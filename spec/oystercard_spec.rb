@@ -70,7 +70,8 @@ describe Oystercard do
       let(:test_journey) { {entry: entry_station, exit: exit_station} }
 
       it 'stores entry and exit stations in journey_history' do
-        expect(subject.touch_out(exit_station)).to include test_journey
+        subject.touch_out(exit_station)
+        expect(subject.journey_history).to include test_journey
       end
     end
   end

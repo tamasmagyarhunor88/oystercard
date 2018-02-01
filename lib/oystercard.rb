@@ -20,13 +20,13 @@ class Oystercard
     fail "Insufficient funds! Your balance is #{@balance},"\
     " minimum fare is #{MINIMUM_FARE}" if minimum_fare?
     @entry_station = entry_station
+    @journey_history << { entry: @entry_station, exit: nil }
   end
 
   def touch_out(exit_station)
-    current_journey = {entry: @entry_station , exit: exit_station }
     deduct(MINIMUM_FARE)
     @entry_station = nil
-    @journey_history << current_journey
+    @journey_history.last[:exit] = exit_station
   end
 
   def in_journey?
