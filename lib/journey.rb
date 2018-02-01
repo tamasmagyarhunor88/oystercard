@@ -19,8 +19,8 @@ class Journey
     !!@entry_station
   end
 
-  def fare(fare = Oystercard::MINIMUM_FARE)
-    fare
+  def fare
+    @entry_station == nil || @exit_station == nil ? Oystercard::PENALTY_FARE : Oystercard::MINIMUM_FARE
   end
 
 end
