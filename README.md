@@ -11,7 +11,9 @@ Oystercard is a week 2 challenge at Makers Academy to strech our existing Ruby, 
   - User only pais for journey when it's complete
   - User is charged penalty fare if didn't touch in or didn't touch out
 
-
+## Technologies used
+  - Ruby
+  - RSpec 
 
 ## How to install
 Make sure you have Ruby and Bundler installed
